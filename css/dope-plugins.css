@@ -1,0 +1,11 @@
+/* 
+    Document   : dope-plugins.css
+    Created on : 26.09.2012, 19:45:58
+    Author     : Darius Glockenmeier <darius@glockenmeier.com>
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.dope-dialog-content{
+    margin: 10px;
+}
