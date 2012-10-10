@@ -44,14 +44,13 @@ final class DopePluginAutoloader {
             require $file;
             return true;
         } else {
-            while (list($k, $dir) = each($this->dirs)) {
-                if (is_file($file = sprintf('%s%s/%s.php', $this->plugin_dir, $dir, $name))) {
+            foreach ($this->dirs as $dir) {
+                if (file_exists($file = sprintf('%s%s/%s.php', $this->plugin_dir, $dir, $name))) {
                     require $file;
                     return true;
                 }
             }
         }
-
         return false;
     }
 
@@ -60,7 +59,7 @@ final class DopePluginAutoloader {
      * @param string $dir 
      */
     public function addDir($dir) {
-        if ($dir instanceof string === false){
+        if ($dir instanceof string === false) {
             throw new DopeException("Invalid parameter. Expected a string containing directory path");
         }
         if (!in_array($dir, $this->dirs)) {
