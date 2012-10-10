@@ -53,19 +53,11 @@ class DopePluginManager {
         }
     }
 
-    public function register(DopePlugin $plugin, $useAutoloader = false) {
+    public function register(DopePlugin $plugin) {
         // only if not already registered
         if (array_search($plugin, $this->plugins, true) === false){
             $this->plugins[] = $plugin;
-            if ($useAutoloader === true){
-                $this->registerAutoloader($plugin);
-            }
         }
-    }
-
-    private function registerAutoloader($plugin){
-        throw new DopePluginException("Not implemented yet.");
-        // TODO: Iterate through common dirs.
     }
     
     /**
