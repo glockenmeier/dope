@@ -5,11 +5,13 @@
  */
 
 /**
- * Description of PluginInfo
+ * Provides plugin information such as name, description, etc.
  *
  * @author Darius Glockenmeier <darius@glockenmeier.com>
- * @package dg-oo-plugin
- * @subpackage core
+ * @package core
+ * @property-read string $name Plugin name
+ * @property-read string $description Plugin description
+ * @property-read string $bootstrapFile Bootstrap file path
  */
 class DopePluginInfo {
     private $name;
@@ -21,11 +23,16 @@ class DopePluginInfo {
         $this->bootstrapFile = $plugin->bootstrapFile;
     }
     
+    /**
+     * 
+     * @param type $property
+     * @return type
+     * @throws Exception
+     */
     public function __get($property) {
     switch ($property) {
       case "name":
         return $this->name;
-        break;
       case "description":
         return $this->description;
       case "bootstrapFile":
@@ -36,5 +43,3 @@ class DopePluginInfo {
     }
   }
 }
-
-?>

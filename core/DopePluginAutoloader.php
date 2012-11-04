@@ -5,11 +5,10 @@
  */
 
 /**
- * Description of DopePluginAutoloader
- *
+ * The autoloader used to enable autoloading feature for DOPE based plugins.
+ * 
  * @author Darius Glockenmeier <darius@glockenmeier.com>
- * @package dg-oo-plugin
- * @subpackage core
+ * @package core
  */
 final class DopePluginAutoloader {
 
@@ -27,7 +26,7 @@ final class DopePluginAutoloader {
      */
     public static function register($plugin_dir) {
         $autoloader = new self($plugin_dir);
-        $result = spl_autoload_register(array($autoloader, 'autoload'));
+        $result = spl_autoload_register(array($autoloader, '_autoload'));
         if ($result == false) {
             return false;
         }
@@ -39,7 +38,7 @@ final class DopePluginAutoloader {
      * It should never be invoked manually
      * @param $name class name
      */
-    public function autoload($name) {
+    public function _autoload($name) {
         if (is_file($file = $this->plugin_dir . $name . '.php')) {
             require $file;
             return true;

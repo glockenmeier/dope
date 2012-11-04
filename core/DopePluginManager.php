@@ -5,64 +5,49 @@
  */
 
 /**
- * Description of PluginManager
+ * Manages DOPE based plugin. Plugins are expected to register itself with the
+ * manager. Registered plugins receive the neccesary events translated from 
+ * Wordpress actions API.
  *
  * @author Darius Glockenmeier <darius@glockenmeier.com>
- * @package dg-oo-plugin
- * @subpackage core
+ * @category Dope API
+ * @package core
+ * @uses DopePlugin Plugins get registered and processed
+ * @uses DopePluginEventHandler Gets attached to plugin(s)
  */
 class DopePluginManager {
 
     private $plugins = array();
-    private static $instance;
+    private static $instance = null;
 
     private function __construct() {
-        $this->init();
-    }
-
-    protected function init() {
-        //add_action('init', array($this, '__loadPlugins'));
-        //add_action('shutdown', array($this, '__unloadPlugins'));
+        
     }
 
     /**
-     * Gets the current instance of DPluginManager.
+     * Gets the current instance of DopePluginManager.
      * @return DopePluginManager
      */
     public static function getInstance() {
-        if (!isset(self::$instance)) {
-            $c = __CLASS__;
-            self::$instance = new $c;
+        if (self::$instance === null) {
+            self::$instance = new self;
         }
         return self::$instance;
-    }
-
-    public function __loadPlugins() {
-        foreach ($this->plugins as $k => $v) {
-            if ($v instanceof DopePlugin) {
-                $v->onLoad();
-            }
-        }
-    }
-
-    public function __unloadPlugins() {
-        foreach ($this->plugins as $k => $v) {
-            if ($v instanceof DopePlugin) {
-                $v->onUnload();
-            }
-        }
     }
 
     public function register(DopePlugin $plugin) {
         // only if not already registered
         if (array_search($plugin, $this->plugins, true) === false){
             $this->plugins[] = $plugin;
+            
+            // attach plugin events
+            new DopePluginEventHandlerImpl($plugin);
         }
     }
     
     /**
      * Get all registered plugins
-     * @return \DopePluginInfo 
+     * @return array array of {@link DopePluginInfo}
      */
     public function getPlugins() {
         $plugins = array();

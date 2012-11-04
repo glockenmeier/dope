@@ -5,43 +5,66 @@
  */
 
 /**
- * Description of DGOOPlugin
+ * The DOPE plugin itself as a DOPE plugin.
  *
  * @author Darius Glockenmeier <darius@glockenmeier.com>
  * @copyright Copyright 2012, Darius Glockenmeier.
- * @license
- * @package dg-oo-plugin
- * @subpackage core
+ * @license license.txt
+ * @package dg-oo-plugin-internal
+ * @access private
  */
 final class DGOOPlugin extends DopePlugin {
+
     private static $instance = null;
     private $adminController;
-    
+    private static $initialized = false;
+
     protected function __construct($bootstrapFile) {
-        if (DGOOPlugin::$instance !== null){
-            die (__CLASS__ . " is singleton. Use getInstance() instead.");
+        if (DGOOPlugin::$instance !== null) {
+            die(__CLASS__ . " is singleton. Use getInstance() instead.");
         }
+        $this->setPriority("init", 1);
+        $this->setPriority("admin_init", 1);
         parent::__construct($bootstrapFile);
-        if (is_admin()){
+        if (is_admin()) {
             $this->adminController = new DopePluginsController($this);
         }
     }
 
-    public static function getInstance($bootstrapFile) {
+    /**
+     * Returns an instnace of dope.
+     * @param type $bootstrapFile file path to dope bootstrap file. note that this is set only once at initialization.
+     * @return DGOOPlugin dope plugin instance.
+     */
+    public static function getInstance($bootstrapFile = null) {
         if (self::$instance === null) {
             self::$instance = new self($bootstrapFile);
         }
-        
+
         return self::$instance;
     }
 
     public static function init($bootstrapFile) {
+
+        if (self::$initialized) {
+            throw new DopeException("DOPE is already initialized.");
+        }
+
+        $dope_version = "0.3.0";
+        define('DOPE_PLUGIN', "DG's Object-oriented Plugin extension v" + $dope_version);
+        define('DOPE_PLUGIN_VERSION', $dope_version);
+        define('DOPE_BASENAME', plugin_basename($bootstrapFile));
         DopePluginManager::getInstance()->register(self::getInstance($bootstrapFile));
-        
-        //$done = do_action('dope_ready');
+        self::$initialized = true;
+        $done = do_action('dope_ready');
     }
 
-    public function reorderPlugins() {
+    /**
+     * {@internal Reorder plugin load order on plugin activation, so that dope is the
+     * first to activate before any depending plugin has the chance to load.}
+     * @access private
+     */
+    public function _reorderPlugins() {
         $option = 'active_plugins';
         $active_plugins = get_option($option);
         $dope_idx = array_search(DOPE_BASENAME, $active_plugins);
@@ -52,13 +75,13 @@ final class DGOOPlugin extends DopePlugin {
         }
         update_option($option, $active_plugins);
     }
-    
-    public function onDeactivation() {
-        parent::onDeactivation();
+
+    public function onDeactivation($event) {
+        parent::onDeactivation($event);
     }
-    
-    public function onActivation() {
-        parent::onActivation();
+
+    public function onActivation($event) {
+        parent::onActivation($event);
     }
 
     public function debug($var) {
@@ -75,9 +98,54 @@ final class DGOOPlugin extends DopePlugin {
         return "dope";
     }
 
-    public function onLoad() {
+    public function onLoad($event) {
         // TODO: make a setting, to enable plugin order override. dope first, update action last. to ensure dope is loaded first (DEFAULT)
-        $this->addAction('activated_plugin', 'reorderPlugins', 1000000);
+        $this->setPriority('activated_plugin', 1000000, '_reorderPlugins');
+        $this->addAction('activated_plugin', '_reorderPlugins');
+        parent::onUnload($event);
     }
-}
 
+    /**
+     * Enables exception handler for uncaught exceptions.
+     * @internal see {@see createExceptionHandler()}.
+     */
+    public function enableExceptionHandler() {
+        $this->createExceptionHandler();
+    }
+
+    private $old_handler = null;
+
+    private function createExceptionHandler() {
+        $this->old_handler = set_exception_handler(array($this, '_uncaughtException'));
+    }
+
+    /**
+     * {@internal exception handler for uncaught exceptions (has to be enabled first)
+     * see {@see Description enableExceptionHandler()}.}
+     * @access private
+     * @param Exception $exception 
+     */
+    public function _uncaughtException($exception) {
+        if ($exception instanceof DopeException) {
+            $message = array(
+                "Uncaught exception" => $exception->getMessage(),
+                "Stacktrace" => $exception->getTrace()
+            );
+            error_log(print_r($message, true));
+        }
+        //restore_exception_handler();
+        printf("Uncaught exception: %s<br />", $exception->getMessage());
+        printf("File: %s on line: %s<br />", $exception->getFile(), $exception->getLine());
+
+        printf("<pre>%s</pre>", print_r($exception, true));
+        printf("Backtrace: <br />");
+        printf("<pre>%s</pre>", print_r(debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 0), true));
+
+
+        if ($this->old_handler != null) {
+            // bubble down to the previous handler
+            call_user_func($this->old_handler, $exception);
+        }
+    }
+
+}

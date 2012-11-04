@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Contains utility fungtions which doesn't fit anywhere else
+ * Contains utility functions which doesn't fit anywhere else (yet)
  *
  * @author Darius Glockenmeier <darius@glockenmeier.com>
- * @package dg-oo-plugin
- * @subpackage core
+ * @package core
+ * @access private
  */
 class DopeUtil {
 
@@ -25,16 +25,24 @@ class DopeUtil {
         }
         return null;
     }
-    
+
     /**
      * Check if the installed dope is compatible with the required dope version
      * @param type $required_dope_version the version number of dope required
      * @return boolean true only if dope version is equal or greater than the required version
      */
-    public static function check_version($required_dope_version){
+    public static function check_version($required_dope_version) {
         return version_compare(DOPE_PLUGIN_VERSION, $required_dope_version) >= 0;
     }
 
-}
+    public static function hprint_r($var, $return = false, $title = '') {
 
-?>
+        $out = "%s<pre>%s</pre>";
+        if ($return) {
+            return sprintf($out, $title, print_r($var, true));
+        } else {
+            printf($out, $title, print_r($var, true));
+        }
+    }
+
+}

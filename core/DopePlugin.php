@@ -5,11 +5,10 @@
  */
 
 /**
- * Description of Plugin
+ * Base class for DOPE based plugin.
  *
  * @author Darius Glockenmeier <darius@glockenmeier.com>
- * @package dg-oo-plugin-extension
- * @subpackage core
+ * @package core
  */
 abstract class DopePlugin {
 
@@ -24,6 +23,7 @@ abstract class DopePlugin {
     private $wp_version;
     protected $wpError;
     private $actionPriority = array();
+    protected $eventHandler = null;
 
     /**
      * 
@@ -87,31 +87,31 @@ abstract class DopePlugin {
     /**
      * Called when the plugin is about to load. 
      */
-    public function onLoad() {
+    public function onLoad($event) {
         
     }
 
     /**
      * Called when the plugin is about to unload. 
      */
-    public function onUnload() {
+    public function onUnload($event) {
         
     }
-
+    
     /**
      * Called when the plugin is being activated. 
      */
-    public function onActivation() {
+    public function onActivation($event) {
         
     }
-
+    
     /**
      * Called when the plugin is going to be deactivated. 
      */
-    public function onDeactivation() {
+    public function onDeactivation($event) {
         
     }
-
+    
     /**
      * Returns the directory path of the plugin.
      * @return string
@@ -197,12 +197,20 @@ abstract class DopePlugin {
         global $wp_version;
         $this->wp_version = $wp_version;
 
-        register_activation_hook($this->bootstrapFile, array($this, 'onActivation'));
-        register_deactivation_hook($this->bootstrapFile, array($this, 'onDeactivation'));
-        $this->addAction('init', 'onLoad');
-        $this->addAction('shutdown', 'onUnload');
         $this->init_shortcodes();
         $this->init_metaboxes();
+    }
+    
+    public function setEventHandler(DopePluginEventHandler $eventHandler) {
+        $this->eventHandler = $eventHandler;
+    }
+    
+    /**
+     * 
+     * @return DopePluginEventHandler
+     */
+    public function getEventHandler() {
+        return $this->eventHandler;
     }
 
     private function init_shortcodes() {
@@ -253,7 +261,7 @@ abstract class DopePlugin {
         return $func !== null ? sprintf("%s_%s", $action, $func) : $action;
     }
 
-    protected function addAction($tag, $function_to_add, $accepted_args = 1) {
+    public function addAction($tag, $function_to_add, $accepted_args = 1) {
         $priority = $this->getPriority($tag, $function_to_add);
         if ($priority === null) {
             $priority = 10; // defaults to 10

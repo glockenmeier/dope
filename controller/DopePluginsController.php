@@ -10,6 +10,8 @@
  * @author Darius Glockenmeier <darius@glockenmeier.com>
  * @package dg-oo-plugin-internal
  * @subpackage controller
+ * @internal Controller for plugin activation/deactivation and the DOPE plugin menu subitem.
+ * @access private
  */
 final class DopePluginsController extends DopeController {
 
@@ -18,19 +20,19 @@ final class DopePluginsController extends DopeController {
 
         $this->initSettingsMenu();
 
-        add_action('admin_menu', array($this, 'initPluginsPage'));
-        add_action('wp_ajax_dope_install_plugin', array($this, 'ajaxHandler'));
-        add_action('wp_ajax_dope_activate_plugin', array($this, 'ajaxHandler'));
-        add_action('wp_ajax_dope_deactivate_plugin', array($this, 'ajaxHandler'));
-        add_action('admin_enqueue_scripts', array($this, 'enqueueStyles'));
-        add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
+        add_action('admin_menu', array($this, '_initPluginsPage'), 1);
+        add_action('wp_ajax_dope_install_plugin', array($this, '_ajaxHandler'));
+        add_action('wp_ajax_dope_activate_plugin', array($this, '_ajaxHandler'));
+        add_action('wp_ajax_dope_deactivate_plugin', array($this, '_ajaxHandler'));
+        add_action('admin_enqueue_scripts', array($this, '_enqueueStyles'), 1);
+        add_action('admin_enqueue_scripts', array($this, '_enqueueScripts'), 1);
     }
 
     private function initSettingsMenu() {
         //add_query_arg()
     }
 
-    public function ajaxHandler($action) {
+    public function _ajaxHandler($action) {
         $action = filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING);
         $model = new DopePluginsModel();
         if ($action == "dope_deactivate_plugin"){
@@ -39,30 +41,33 @@ final class DopePluginsController extends DopeController {
         }
     }
 
-    public function renderDopeDialog() {
+    public function _renderDopeDialog() {
         $view = new SimpleDopeView($this->plugin);
         $model = new DopePluginsModel();
         $view->assign("plugins", $model->getPlugins())
                 ->render('admin/plugin-dialog');
     }
 
-    public function enqueueScripts() {
+    public function _enqueueScripts() {
         $this->plugin->enqueueScript('dope-plugins', array('jquery-ui-dialog'), false, true);
     }
 
-    public function enqueueStyles() {
+    public function _enqueueStyles() {
         $this->plugin->enqueueStyle('wp-jquery-ui-dialog');
         $this->plugin->enqueueStyle('dope-plugins');
     }
 
-    public function initPluginsPage() {
+    public function _initPluginsPage() {
         $page = add_plugins_page("DOPE based plugins", "DOPE Plugins", "activate_plugins", $this->getHook(), array($this, 'render'));
-        //add_action('admin_print_scripts-' . $page, 'enqueuePluginsPageScripts');
-        add_action('admin_footer', array($this, 'renderDopeDialog'));
+        add_action('admin_footer', array($this, '_renderDopeDialog'));
     }
     
     public function enqueuePluginsPageScripts() {
         
+    }
+
+    public function defaultAction() {
+        $this->indexAction();
     }
 
     public function indexAction() {
@@ -71,8 +76,7 @@ final class DopePluginsController extends DopeController {
         $plugins = $model->getPlugins(true);
         //$debug = print_r($plugins, true);
 
-        $view->assign("name", "Darius")
-                ->assign("plugins", $plugins)
+        $view->assign("plugins", $plugins)
                 //->assign("debug", $debug)
                 ->assign("controllerUrl", $this->getControllerUrl())
                 ->render("admin/plugin-page");

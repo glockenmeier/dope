@@ -5,10 +5,11 @@
  */
 
 /**
- * Description of DopeCustomPostType
+ * Abstract class for creating Custom Post Type.
+ * It also wraps various post-type related function as a single object.
  *
  * @author Darius Glockenmeier <darius@glockenmeier.com>
- * @package your_package_name_here
+ * @package core
  */
 abstract class DopeCustomPostType {
 
@@ -97,7 +98,7 @@ abstract class DopeCustomPostType {
     }
 
     /**
-     * Registers the post type. Do not use before init. 
+     * Registers the post type. Do not use before init action.
      * @link http://codex.wordpress.org/Function_Reference/register_post_type 
      */
     public function register() {

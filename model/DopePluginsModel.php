@@ -10,20 +10,25 @@
  * @author Darius Glockenmeier <darius@glockenmeier.com>
  * @package dg-oo-plugin-internal
  * @subpackage model
+ * @internal DOPE's MVC Model
+ * @access private
  */
 class DopePluginsModel {
 
     public function disableDopePlugins() {
         $plugins = $this->getPlugins();
+        array_reverse($plugins);
         $dope = DGOOPlugin::getInstance(null);
         foreach ($plugins as $p) {
-            deactivate_plugins($p['bootstrapFile']);
+            $this->deactivateDopePlugin($p['bootstrapFile'], false, null);
         }
-        // deactivate dope itself
-        deactivate_plugins($dope->bootstrapFile);
+        $this->deactivateDopePlugin($dope->bootstrapFile);
     }
 
     public function deactivateDopePlugin($bootstrapFile) {
+        if (!is_array($bootstrapFile)){
+            $bootstrapFile = array( $bootstrapFile );
+        }
         deactivate_plugins($bootstrapFile);
     }
 

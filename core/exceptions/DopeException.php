@@ -8,9 +8,8 @@
  * Dope based exception
  *
  * @author Darius Glockenmeier <darius@glockenmeier.com>
- * @package dg-oo-plugin
+ * @package core
  * @subpackage exceptions
  */
 class DopeException extends Exception {
 }
-

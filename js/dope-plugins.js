@@ -1,4 +1,7 @@
-
+/**
+ * Displays deactivation dialog when user clicks on deactivate link while other
+ * depending plugin's are still active.
+ */
 (function($) {
     $(document).ready(function() {
         var $dialog = $('#dope-plugin-dialog').dialog({
@@ -34,11 +37,6 @@
             }
             $dialog.dialog('open');
             // prevent the default action, e.g., following a link
-            return false;
-        });
-        $('#helloworld').click(function(){
-            console.log($dialog);
-            $dialog.dialog('open');
             return false;
         });
     });

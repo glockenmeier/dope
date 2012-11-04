@@ -2,6 +2,11 @@
 
 dope_autoloader::register();
 
+/**
+ * @package dg-oo-plugin-internal
+ * @internal DOPE's Autoloader
+ * @access private
+ */
 final class dope_autoloader {
 
     private $plugin_dir;
@@ -23,7 +28,7 @@ final class dope_autoloader {
      * @param $name class name
      */
     public function autoload($name) {
-        $dirs = array('core', 'core/exceptions', 'controller', 'model', 'view');
+        $dirs = array('core', 'core/exceptions', 'core/collection', 'core/events', 'controller', 'model', 'view');
         
         if (is_file($file = $this->plugin_dir . $name . '.php')) {
             require $file;
@@ -41,4 +46,3 @@ final class dope_autoloader {
     }
 
 }
-

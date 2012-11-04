@@ -5,11 +5,10 @@
  */
 
 /**
- * Description of DWidget
+ * Wordpress Widget abstraction.
  *
  * @author Darius Glockenmeier <darius@glockenmeier.com>
- * @package dg-oo-plugin
- * @subpackage core
+ * @package core
  * @todo TODO: see if it's not better to abstarct this away, instead of extending WP_Widget...
  */
 abstract class DopeWidget extends WP_Widget {
@@ -58,5 +57,3 @@ abstract class DopeWidget extends WP_Widget {
      */
     public abstract function form($instance);
 }
-
-?>

@@ -5,10 +5,11 @@
  */
 
 /**
- * Description of DopeSimplePostTypeLabel
+ * A simple labels implementation for custom post type.
  *
  * @author Darius Glockenmeier <darius@glockenmeier.com>
- * @package your_package_name_here
+ * @package core
+ * @todo TODO: maybe some abstraction?
  */
 class DopeSimplePostTypeLabel {
     private $singular;
@@ -46,5 +47,3 @@ class DopeSimplePostTypeLabel {
         return $this->object;
     }
 }
-
-?>

@@ -9,10 +9,10 @@
  
  * @author WP Simple Booking Calendar
  * @author Darius Glockenmeier <darius@glockenmeier.com>
- * @package dg-oo-plugin
- * @subpackage core
+ * @package core
+ * @category MVC
  */
-class SimpleDopeView implements DopeView {
+class SimpleDopeView implements DopeView, DopeCallable {
 
     /**
      * View variables array
@@ -47,8 +47,9 @@ class SimpleDopeView implements DopeView {
     /**
      * Constructor
      */
-    public function __construct(DopePlugin $plugin) {
+    public function __construct(DopePlugin $plugin, $templateName = null) {
         $this->plugin = $plugin;
+        $this->templateName = $templateName;
     }
 
     /**
@@ -124,6 +125,10 @@ class SimpleDopeView implements DopeView {
         ob_end_clean();
 
         return $contents;
+    }
+
+    public function getCallback() {
+        return array($this, 'render');
     }
 
 }

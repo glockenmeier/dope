@@ -5,10 +5,10 @@
  */
 
 /**
- * Base class for DPlugin related exceptions
+ * Base class for DopePlugin related exceptions
  *
  * @author Darius Glockenmeier <darius@glockenmeier.com>
- * @package dg-oo-plugin
+ * @package core
  * @subpackage exceptions
  */
 class DopePluginException extends DopeException {

@@ -4,11 +4,12 @@
  * Provides:    dope
  * Plugin URI:  http://www.baliashram.com/
  * Description: Add's an object oriented plug-in layer for WordPress.
- * Version:     0.1.6
+ * Version:     0.3.1
  * Author:      Darius Glockenmeier
  * Author URI:  http://www.baliashram.com/
  * Network:     true
  * License:     GPLv3
+ * Requires at least: 3.0
  */
 
 /* Copyright (C) 2012  Darius Glockenmeier
@@ -28,11 +29,5 @@
 */
 
 require_once 'dope-autoload.php';
-
-$dope_version = "0.1.4";
-
-define('DOPE_PLUGIN', "DG's Object-oriented Plugin extension v" + $dope_version);
-define('DOPE_PLUGIN_VERSION', $dope_version);
-define('DOPE_BASENAME', plugin_basename(__FILE__));
 
 DGOOPlugin::init(__FILE__);

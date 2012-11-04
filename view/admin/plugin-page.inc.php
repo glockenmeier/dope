@@ -1,6 +1,7 @@
 <?php
 /*
- * Whatever
+ * The DOPE plugin submenu content
+ * @internal Lists all active (registered) dope plugin's (still incomplete)
  */
 ?>
 <div id="dope-wrapper" class="wrap">
@@ -42,7 +43,7 @@
     </table>
     <div class="updated">
         <?php if ($this->debug): ?>
-            <p style="font-size: 14px;">dev-212 executed<br />
+            <p style="font-size: 14px;">Hello<br />
             <p><pre><?php echo $this->debug ?> </pre></p>
         <?php endif; ?>
     </div>

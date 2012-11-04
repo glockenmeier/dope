@@ -5,19 +5,17 @@
  */
 
 /**
- * Description of DopeMetabox
- *
+ * Base class for adding a Metabox Model
  * @author Darius Glockenmeier <darius@glockenmeier.com>
- * @package dg-oo-plugin
- * @subpackage core
+ * @package core
  */
-abstract class DopeMetabox {
+abstract class DopeMetabox implements DopeCallable {
 
-    private $id;
-    private $title;
-    private $screen;
-    private $context;
-    private $priority;
+    protected $id;
+    protected $title;
+    protected $screen;
+    protected $context;
+    protected $priority;
 
     public function __construct($id, $title, $screen = null, $context = 'advanced', $priority = 'default') {
         $this->id = $id;
@@ -26,12 +24,38 @@ abstract class DopeMetabox {
         $this->context = $context;
         $this->priority = $priority;
     }
-    
+
     public function __get($name) {
         return $this->$name;
     }
-    
-    public abstract function renderMetabox();
+
+    /**
+     * Note that getCallback will also trigger this function
+     * @param type $post
+     * @access private
+     * @internal get's called when the metabox needs to be rendered.
+     */
+    public function _doRenderMetabox($post) {
+        $this->renderMetabox($post);
+    }
+
+    /**
+     * Will be called when the metabox needs to be rendered.
+     * @param Object $post the post object 
+     */
+    public abstract function renderMetabox($post);
+
+    /**
+     * Returns the render callback
+     * @uses _doRenderMetbox render callback function
+     * @return array the render callback
+     */
+    public function getCallback() {
+        return array($this, '_doRenderMetabox');
+    }
+
+    public function add() {
+        add_meta_box($this->id, $this->title, $this->getCallback(), $this->screen, $this->context, $this->priority);
+    }
 
 }
-

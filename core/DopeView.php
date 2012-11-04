@@ -5,11 +5,11 @@
  */
 
 /**
- * Description of DopeView
+ * Describes the minimal requirement for a templated view.
  *
  * @author Darius Glockenmeier <darius@glockenmeier.com>
- * @package dg-oo-plugin
- * @subpackage core
+ * @package core
+ * @category MVC
  */
 interface DopeView {
 

@@ -1,9 +1,9 @@
 <?php
 /*
- * Displays the plugin dialog
+ * Renders the plugin dialog
+ * @internal Template for the plugin deactivation dialog (only displayed if some dependant plugin is active)
  */
 ?>
-<div id="helloworld">Hello world!</div>
 <div style = "display:none">
     <div id = "dope-plugin-dialog" class = "dope-dialog">
         <div class="dope-dialog-content">
