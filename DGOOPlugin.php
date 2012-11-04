@@ -32,7 +32,7 @@ final class DGOOPlugin extends DopePlugin {
     }
 
     /**
-     * Returns an instnace of dope.
+     * Returns the instance of dope.
      * @param type $bootstrapFile file path to dope bootstrap file. note that this is set only once at initialization.
      * @return DGOOPlugin dope plugin instance.
      */
