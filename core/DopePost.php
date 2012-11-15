@@ -69,7 +69,7 @@ final class DopePost {
     /**
      * Creates a new instance of DopePost
      * @param int $post_id The post id
-     * @return DopePost new instance
+     * @return DopePost|null new instance of DopePost or null if not found
      * @throws InvalidArgumentException 
      */
     public static function byPostId($post_id) {
@@ -77,26 +77,26 @@ final class DopePost {
             throw new InvalidArgumentException('Expected $post_id to be an integer');
         }
         $post = get_post($post_id, OBJECT);
-        return new self($post);
+        return $post !== null ? new self($post) : null;
     }
 
     /**
      * Creates a new instance of DopePost
      * @param object $post The post object
-     * @return DopePost new instance
+     * @return DopePost|null new instance of DopePost or null if not found
      * @throws InvalidArgumentException 
      */
     public static function byPostObject($post) {
         if (!is_object($post)) {
             throw new InvalidArgumentException('Expected $post to be an object');
         }
-        return new self($post);
+        return $post !== null ? new self($post) : null;
     }
 
     /**
      * Gets an instance DopePost by post id or post object.
      * @param mixed $post post id or post object.
-     * @return DopePost post object
+     * @return DopePost|null new instance of DopePost or null if not found
      * @throws InvalidArgumentException 
      */
     public static function get($post) {
@@ -111,7 +111,7 @@ final class DopePost {
 
     /**
      * Returns the underlying WP post object
-     * @return object wp post object
+     * @return object|null wp post object or null if not found
      */
     public function toPostObject() {
         return get_post($this->post_object, OBJECT);;
