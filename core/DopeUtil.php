@@ -45,4 +45,13 @@ class DopeUtil {
         }
     }
 
+    /**
+     * 
+     * @global WP_Rewrite $wp_rewrite
+     * @return WP_Rewrite WP_Rewrite instance
+     */
+    public static function get_wp_rewrite() {
+        global $wp_rewrite;
+        return $wp_rewrite;
+    }
 }
