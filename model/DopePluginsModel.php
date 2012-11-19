@@ -49,13 +49,13 @@ class DopePluginsModel {
         $result = array();
         $plugins = $pm->getPlugins();
         foreach ($plugins as $p) {
-            if ($p->name === "dope" && !$includeSelf)
+            if ($p->getName() === "dope" && !$includeSelf)
                 continue;
 
             if ($p instanceof DopePluginInfo) {
                 $result[] = array(
-                    "name" => esc_html($p->name),
-                    "description" => $this->sanitizeDescriptionHtml($p->description),
+                    "name" => esc_html($p->getName()),
+                    "description" => $this->sanitizeDescriptionHtml($p->getDescription()),
                     "bootstrapFile" => $p->bootstrapFile);
             }
         }
