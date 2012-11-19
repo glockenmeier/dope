@@ -46,12 +46,23 @@ class DopeUtil {
     }
 
     /**
-     * 
+     * Retrieve WP_Rewrite object from global $wp_rewrite.
      * @global WP_Rewrite $wp_rewrite
      * @return WP_Rewrite WP_Rewrite instance
      */
     public static function get_wp_rewrite() {
         global $wp_rewrite;
         return $wp_rewrite;
+    }
+    
+    /**
+     * Retrieve user info by user id (wraps WP's get_userdata function)
+     * @param type $user_id User ID
+     * @uses get_userdata returns the return value of get_userdata with type hinting added.
+     * @return  bool|WP_User False on failure, WP_User object on success
+     */
+    public static function get_wp_user($user_id) {
+        return get_userdata($user_id);
+        
     }
 }
