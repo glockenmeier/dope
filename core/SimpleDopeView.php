@@ -1,12 +1,14 @@
 <?php
 
+/*
+ * Copyright 2012, Darius Glockenmeier.
+ */
+
 /**
  * Simple view. 
  * Slightly modified version of the original WpSimpleBookingCalendar_View
- * the WP Simple Booking Calendar author.
+ * the WP Simple Booking Calendar author Copyright (c) 2011 WP Simple Booking Calendar.
  *
- * @copyright Copyright (c) 2011 WP Simple Booking Calendar
- 
  * @author WP Simple Booking Calendar
  * @author Darius Glockenmeier <darius@glockenmeier.com>
  * @package core
