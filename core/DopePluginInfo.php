@@ -23,10 +23,28 @@ class DopePluginInfo {
      * @param DopePlugin $plugin plugin instance to get meta-data from
      * @param string $plugin_file Optional. will use the specified file to read meta-data instead of the one supplied by $plugin.
      */
-    public function __construct(DopePlugin $plugin, $plugin_file = null) {
+    public function __construct(DopePlugin $plugin = null, $plugin_file = null) {
         
-        $this->bootstrapFile = $plugin_file === null ? $plugin->bootstrapFile : $plugin_file;
-        $this->plugin_data = get_plugin_data($this->bootstrapFile, true, true);
+        $this->bootstrapFile = $plugin !== null ? $plugin->bootstrapFile : $plugin_file;
+        
+        if (true == false){
+            $this->plugin_data = get_plugin_data($this->bootstrapFile, true, true);
+        } else {
+            $default_headers = array(
+		'Name' => 'Plugin Name',
+		'PluginURI' => 'Plugin URI',
+		'Version' => 'Version',
+		'Description' => 'Description',
+		'Author' => 'Author',
+		'AuthorURI' => 'Author URI',
+		'TextDomain' => 'Text Domain',
+		'DomainPath' => 'Domain Path',
+		'Network' => 'Network',
+		// Site Wide Only is deprecated in favor of Network.
+		'_sitewide' => 'Site Wide Only',
+            );
+            $this->plugin_data = get_file_data($this->bootstrapFile, $default_headers);
+        }
     }
     
     /**
