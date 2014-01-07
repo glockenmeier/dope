@@ -14,7 +14,7 @@
  * @package core
  * @category MVC
  */
-class SimpleDopeView implements DopeView, DopeCallable {
+class SimpleDopeView extends DopeRenderable implements DopeView {
 
     /**
      * View variables array
@@ -41,16 +41,16 @@ class SimpleDopeView implements DopeView, DopeCallable {
     protected $templateName = null;
 
     /**
-     * The plugin
-     * @var DopePlugin
+     * The plugin path
+     * @var string
      */
-    protected $plugin = null;
+    protected $path = null;
 
     /**
      * Constructor
      */
-    public function __construct(DopePlugin $plugin, $templateName = null) {
-        $this->plugin = $plugin;
+    public function __construct($path, $templateName = null) {
+        $this->path = $path;
         $this->templateName = $templateName;
     }
 
@@ -105,10 +105,10 @@ class SimpleDopeView implements DopeView, DopeCallable {
      * @return SimpleDopeView
      */
     public function render($template = null) {
-        $file = $this->plugin->getDirectory() . $this->viewDir . ($template !== null ? $template : $this->templateName) . $this->extension;
+        $file = $this->path . $this->viewDir . ($template !== null ? $template : $this->templateName) . $this->extension;
 
         if (!is_readable($file)) {
-            throw new DopeViewException(sprintf(__("Can't find view template: %s", 'sbc'), $file));
+            throw new DopeViewException(sprintf(__("Can't find view template: %s", 'dope'), $file));
         }
         include $file;
         return $this;
