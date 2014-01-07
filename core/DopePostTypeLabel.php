@@ -22,7 +22,7 @@ abstract class DopePostTypeLabel {
     protected $class;
 
     public function __construct($singular, $plural) {
-        $this->class = new ReflectionClass(get_class($this));
+        $this->class = new ReflectionClass($this);
         $this->singular = __($singular, $this->class->getName());
         $this->plural = __($plural, $this->class->getName());
     }
