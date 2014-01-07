@@ -183,6 +183,9 @@ abstract class DopePlugin {
 
     protected function _init() {
         $this->wpError = new WP_Error();
+        // note: when you create ReflectionClass object and assigning to
+        // $this->reflection without storing it in a local variable first
+        // PHP throws an error
         $r = new ReflectionClass(get_class($this));
         $this->reflection = $r;
 
