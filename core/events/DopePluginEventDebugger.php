@@ -5,7 +5,7 @@
  */
 
 /**
- * Description of DopePluginEventDebugger
+ * Sample event debugger
  *
  * @author Darius Glockenmeier <darius@glockenmeier.com>
  * @package core
@@ -42,19 +42,19 @@ class DopePluginEventDebugger implements DopePluginEvent {
         printf("<pre>%s</pre>", $text);
     }
     
-    public function onActivation(DopePlugin $plugin, $event) {
+    public function onActivation(DopePlugin $plugin, DopeEvent $event) {
         $this->log(__METHOD__, $plugin, $event);
     }
 
-    public function onDeactivation(DopePlugin $plugin, $event) {
+    public function onDeactivation(DopePlugin $plugin, DopeEvent $event) {
         $this->log(__METHOD__, $plugin, $event);
     }
 
-    public function onLoad(DopePlugin $plugin, $event) {
+    public function onLoad(DopePlugin $plugin, DopeEvent $event) {
         $this->log(__METHOD__, $plugin, $event);
     }
 
-    public function onUnload(DopePlugin $plugin, $event) {
+    public function onUnload(DopePlugin $plugin, DopeEvent $event) {
         $this->log(__METHOD__, $plugin, $event);
     }
 }
