@@ -114,7 +114,7 @@ final class DopePost {
      * @return object|null wp post object or null if not found
      */
     public function toPostObject() {
-        return get_post($this->post_object, OBJECT);;
+        return get_post($this->post_object, OBJECT);
     }
     
     /**
