@@ -14,7 +14,7 @@
  * @access private
  */
 final class DopePluginsController extends DopeController {
-
+    private $plugin_dir;
     public function __construct(DopePlugin $plugin) {
         parent::__construct($plugin);
 
@@ -26,6 +26,7 @@ final class DopePluginsController extends DopeController {
         add_action('wp_ajax_dope_deactivate_plugin', array($this, '_ajaxHandler'));
         add_action('admin_enqueue_scripts', array($this, '_enqueueStyles'), 1);
         add_action('admin_enqueue_scripts', array($this, '_enqueueScripts'), 1);
+        $this->plugin_dir = $plugin->getDirectory();
     }
 
     private function initSettingsMenu() {
@@ -42,7 +43,7 @@ final class DopePluginsController extends DopeController {
     }
 
     public function _renderDopeDialog() {
-        $view = new SimpleDopeView($this->plugin);
+        $view = new SimpleDopeView($this->plugin_dir);
         $model = new DopePluginsModel();
         $view->assign("plugins", $model->getPlugins())
                 ->render('admin/plugin-dialog');
@@ -58,7 +59,7 @@ final class DopePluginsController extends DopeController {
     }
 
     public function _initPluginsPage() {
-        $page = add_plugins_page("DOPE based plugins", "DOPE Plugins", "activate_plugins", $this->getHook(), array($this, 'render'));
+        add_plugins_page("DOPE based plugins", "DOPE Plugins", "activate_plugins", $this->getHook(), array($this, 'render'));
         add_action('admin_footer', array($this, '_renderDopeDialog'));
     }
     
@@ -71,19 +72,17 @@ final class DopePluginsController extends DopeController {
     }
 
     public function indexAction() {
-        $view = new SimpleDopeView($this->plugin);
+        $view = new SimpleDopeView($this->plugin_dir);
         $model = new DopePluginsModel();
         $plugins = $model->getPlugins(true);
-        //$debug = print_r($plugins, true);
 
         $view->assign("plugins", $plugins)
-                //->assign("debug", $debug)
                 ->assign("controllerUrl", $this->getControllerUrl())
                 ->render("admin/plugin-page");
     }
 
     public function editAction() {
-        $view = new SimpleDopeView($this->plugin);
+        $view = new SimpleDopeView($this->plugin_dir);
 
         $view->assign("name", "Edit bla bla")
                 ->render("admin/plugin-page");
