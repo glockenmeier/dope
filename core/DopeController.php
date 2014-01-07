@@ -14,9 +14,8 @@
  */
 abstract class DopeController {
 
-    private $reflection;
-    private $methods = array();
-    private $hook;
+    protected $class;
+    protected $hook;
 
     /**
      * The plugin
@@ -25,9 +24,8 @@ abstract class DopeController {
     protected $plugin;
 
     public function __construct(DopePlugin $plugin) {
-        $this->reflection = new ReflectionClass(get_class($this));
+        $this->class = new ReflectionClass($this);
         $this->plugin = $plugin;
-        $this->methods = get_class_methods($this);
         $this->hook = $this->createHook();
     }
 
@@ -41,11 +39,11 @@ abstract class DopeController {
     }
 
     private function createHook() {
-        $slug = $this->reflection->getName();
+        $slug = $this->class->getName();
         // remove "Controller" suffix.
         $pos = strrpos($slug, "Controller");
         if ($pos !== false) {
-            $slug = substr($this->reflection->getName(), 0, $pos);
+            $slug = substr($this->class->getName(), 0, $pos);
         }
         // remove class prefix
         if (stripos($slug, $this->plugin->getName()) === 0) {
@@ -58,6 +56,7 @@ abstract class DopeController {
     /**
      * Gets called when the action request parameter is unspecified. ie. getCurrentAction returns null.
      * @see getCurentAction
+     * @see render
      */
     public abstract function defaultAction();
 
@@ -93,7 +92,7 @@ abstract class DopeController {
             return;
         }
         $actionMethod = $this->getCurrentAction() . 'Action';
-        if (array_search($actionMethod, $this->methods) !== false) {
+        if (array_search($actionMethod, $this->class->getMethods()) !== false) {
             $this->$actionMethod();
             return;
         }
@@ -125,7 +124,6 @@ abstract class DopeController {
         global $post;
         
         if ( !isset( $post )) {
-            //_doing_it_wrong (__FUNCTION__, '$post global not set yet', '0');
             return null;
         }
         return DopePost::get($post);
