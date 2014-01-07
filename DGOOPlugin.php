@@ -26,6 +26,7 @@ final class DGOOPlugin extends DopePlugin {
         $this->setPriority("init", 1);
         $this->setPriority("admin_init", 1);
         parent::__construct($bootstrapFile);
+        
         if (is_admin()) {
             $this->adminController = new DopePluginsController($this);
         }
@@ -49,10 +50,9 @@ final class DGOOPlugin extends DopePlugin {
         if (self::$initialized) {
             throw new DopeException("DOPE is already initialized.");
         }
-
-        $dope_version = "0.3.0";
-        define('DOPE_PLUGIN', "DG's Object-oriented Plugin extension v" + $dope_version);
-        define('DOPE_PLUGIN_VERSION', $dope_version);
+        $info = DopePluginInfo::fromPluginFile($bootstrapFile);
+        define('DOPE_PLUGIN', sprintf("%s v%s", $info->getName(), $info->getVersion()));
+        define('DOPE_PLUGIN_VERSION', $info->getVersion());
         define('DOPE_BASENAME', plugin_basename($bootstrapFile));
         DopePluginManager::getInstance()->register(self::getInstance($bootstrapFile));
         self::$initialized = true;
