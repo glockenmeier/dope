@@ -40,12 +40,12 @@ class DopePluginEventHandlerImpl implements DopePluginEventHandler {
 
     private function getActivation() {
         $opt = $this->getInstallOption();
-        $activation = get_option($opt, null);
-        if ($activation === null) {
+        $activation = get_option($opt);
+        if ($activation === false) {
             add_option($opt, 0, '', true);
             return true;
         }
-        return intval($activation) !== 0;
+        return intval($activation) === 0;
     }
 
     private function getInstallOption() {
