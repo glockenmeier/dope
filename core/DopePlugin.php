@@ -27,7 +27,7 @@ abstract class DopePlugin {
 
     /**
      * 
-     * @param string $bootstrapFile name including full path of the bootstrap file (plugin entry point). passing __FILE__ usually suffice.
+     * @param string $bootstrapFile name including full path of the bootstrap file (plugin entry point). passing __FILE__ usually suffice if file is located in base plugin directory.
      */
     protected function __construct($bootstrapFile) {
 
@@ -82,7 +82,10 @@ abstract class DopePlugin {
     /**
      * Gets the plugin description. 
      */
-    public abstract function getDescription();
+    public function getDescription() {
+        $pi = DopePluginInfo::fromPlugin($this);
+        return $pi->getDescription();
+    }
 
     /**
      * Called when the plugin is about to load. 

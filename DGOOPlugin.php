@@ -56,12 +56,12 @@ final class DGOOPlugin extends DopePlugin {
         define('DOPE_BASENAME', plugin_basename($bootstrapFile));
         DopePluginManager::getInstance()->register(self::getInstance($bootstrapFile));
         self::$initialized = true;
-        $done = do_action('dope_ready');
+        do_action('dope_ready');
     }
 
     /**
      * {@internal Reorder plugin load order on plugin activation, so that dope is the
-     * first to activate before any depending plugin has the chance to load.}
+     * last to activate so that any depending plugin has the chance to add_action.}
      * @access private
      */
     public function _reorderPlugins() {
@@ -71,7 +71,7 @@ final class DGOOPlugin extends DopePlugin {
         $dope = $active_plugins[$dope_idx];
         if ($dope_idx > 0) {
             array_splice($active_plugins, $dope_idx, 1);
-            array_unshift($active_plugins, $dope);
+            array_push($active_plugins, $dope);
         }
         update_option($option, $active_plugins);
     }
@@ -87,15 +87,6 @@ final class DGOOPlugin extends DopePlugin {
     public function debug($var) {
         $text = printf('<p id="debug"><pre>%s</pre></p>', print_r($var, true));
         return $text;
-    }
-
-    //put your code here
-    public function getDescription() {
-        return "Add's an object oriented plug-in layer for WordPress.";
-    }
-
-    public function getName() {
-        return "dope";
     }
 
     public function onLoad($event) {

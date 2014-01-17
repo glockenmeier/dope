@@ -58,7 +58,9 @@ abstract class DopeController {
      * @see getCurentAction
      * @see render
      */
-    public abstract function defaultAction();
+    public function defaultAction() {
+        // do nothing
+    }
 
     /**
      * Validates and returns current controller action
