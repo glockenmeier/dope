@@ -65,4 +65,14 @@ class DopeUtil {
         return get_userdata($user_id);
         
     }
+    
+    /**
+     * Retrieve wbdb object from global $wpdb.
+     * @global wpdb $wpdb
+     * @return wpdb global wpdb instance
+     */
+    public static function get_wpdb() {
+        global $wpdb;
+        return $wpdb;
+    }
 }
