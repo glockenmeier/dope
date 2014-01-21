@@ -13,7 +13,7 @@
  */
 abstract class DopeShortcode implements DopeCallable {
 
-    private $tag;
+    protected $tag;
 
     public function __construct($tag) {
         $this->tag = $tag;
@@ -26,7 +26,7 @@ abstract class DopeShortcode implements DopeCallable {
     protected abstract function processShortcode($atts, $content = '');
 
     public function _doProcessShortcode($atts, $content = '') {
-        $this->processShortcode($atts, $content);
+        return $this->processShortcode($atts, $content);
     }
 
     public function __get($name) {

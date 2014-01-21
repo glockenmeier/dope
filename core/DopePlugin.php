@@ -21,6 +21,10 @@ abstract class DopePlugin {
     private $jsUrl;
     private $bootstrapFile;
     private $wp_version;
+    /**
+     * WP error object
+     * @var WP_Error
+     */
     protected $wpError;
     private $actionPriority = array();
     protected $eventHandler = null;
@@ -222,7 +226,7 @@ abstract class DopePlugin {
     private function init_shortcodes() {
         foreach ($this->shortcodes as $shortcode) {
             if ($shortcode instanceof DopeShortcode) {
-                add_shortcode($shortcode->tag, array($shortcode, 'processShortcode'));
+                $shortcode->add();
             }
         }
     }
@@ -230,7 +234,7 @@ abstract class DopePlugin {
     private function init_metaboxes() {
         foreach ($this->metaboxes as $m) {
             if ($m instanceof DopeMetabox) {
-                add_meta_box($m->id, $m->title, array($m, 'renderMetabox'), $m->screen, $m->context, $m->priority, $m->callback_args);
+                $m->add();
             }
         }
     }

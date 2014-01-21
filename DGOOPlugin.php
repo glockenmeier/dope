@@ -46,7 +46,7 @@ final class DGOOPlugin extends DopePlugin {
     }
 
     public static function init($bootstrapFile) {
-
+        do_action('dope_initializing');
         if (self::$initialized) {
             throw new DopeException("DOPE is already initialized.");
         }
@@ -56,7 +56,8 @@ final class DGOOPlugin extends DopePlugin {
         define('DOPE_BASENAME', plugin_basename($bootstrapFile));
         DopePluginManager::getInstance()->register(self::getInstance($bootstrapFile));
         self::$initialized = true;
-        do_action('dope_ready');
+        do_action('dope_initialized');
+        do_action('dope_ready'); // dependent plugin should use this hook
     }
 
     /**

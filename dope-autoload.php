@@ -28,7 +28,7 @@ final class dope_autoloader {
      * @param $name class name
      */
     public function autoload($name) {
-        $dirs = array('core', 'core/exceptions', 'core/collection', 'core/events', 'core/wp', 'controller', 'model', 'view');
+        $dirs = array('core', 'core/exceptions', 'core/collection', 'core/events', 'core/wp', 'core/form', 'controller', 'model', 'view');
         
         if (is_file($file = $this->plugin_dir . $name . '.php')) {
             require $file;
