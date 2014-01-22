@@ -10,7 +10,7 @@
  * @author Darius Glockenmeier <darius@glockenmeier.com>
  * @package core
  */
-final class DopePluginAutoloader {
+final class DopePluginAutoloader implements DopeAutoloader {
 
     private $plugin_dir;
     private $dirs = array('controller', 'view', 'model'); // default dirs
@@ -26,19 +26,19 @@ final class DopePluginAutoloader {
      */
     public static function register($plugin_dir) {
         $autoloader = new self($plugin_dir);
-        $result = spl_autoload_register(array($autoloader, '_autoload'));
+        $result = spl_autoload_register(array($autoloader, 'autoload'));
         if ($result == false) {
             return false;
         }
         return $autoloader;
     }
-
+    
     /**
-     * This magic method is invoked each time a class is used which has not yet been defined.
+     * This method is invoked each time a class is used which has not yet been defined.
      * It should never be invoked manually
      * @param $name class name
      */
-    public function _autoload($name) {
+    public function autoload($name) {
         if (is_file($file = $this->plugin_dir . $name . '.php')) {
             require $file;
             return true;

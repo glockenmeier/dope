@@ -15,8 +15,12 @@
 class DopeTransient {
     private $prefix;
     
+    /**
+     * 
+     * @param string $prefix
+     */
     public function __construct($prefix = '') {
-        $this->prefix = $prefix;
+        $this->prefix = strval($prefix);
     }
     
     /**
