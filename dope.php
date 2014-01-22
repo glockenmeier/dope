@@ -4,7 +4,7 @@
  * Provides:    dope
  * Plugin URI:  http://www.baliashram.com/
  * Description: Add's an object oriented plug-in layer for WordPress.
- * Version:     0.3.1
+ * Version:     0.4.0
  * Author:      Darius Glockenmeier
  * Author URI:  http://www.baliashram.com/
  * Network:     true
