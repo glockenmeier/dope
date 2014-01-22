@@ -80,7 +80,8 @@ abstract class DopePlugin {
      * Gets the display name of the plugin.
      */
     public function getName() {
-        return plugin_basename($this->bootstrapFile);
+        $pi = DopePluginInfo::fromPlugin($this);
+        return plugin_basename($pi->getName());
     }
 
     /**

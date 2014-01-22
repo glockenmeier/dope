@@ -74,7 +74,7 @@ final class DopePluginsController extends DopeController {
     public function indexAction() {
         $view = new SimpleDopeView($this->plugin_dir);
         $model = new DopePluginsModel();
-        $plugins = $model->getPlugins(true);
+        $plugins = $model->getPlugins(false);
 
         $view->assign("plugins", $plugins)
                 ->assign("controllerUrl", $this->getControllerUrl())

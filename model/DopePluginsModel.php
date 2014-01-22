@@ -49,7 +49,7 @@ class DopePluginsModel {
         $result = array();
         $plugins = $pm->getPlugins();
         foreach ($plugins as $p) {
-            if ($p->getName() === "dope" && !$includeSelf)
+            if ($p->getName() === "DG's Object-oriented Plugin Extension" && !$includeSelf)
                 continue;
 
             if ($p instanceof DopePluginInfo) {
