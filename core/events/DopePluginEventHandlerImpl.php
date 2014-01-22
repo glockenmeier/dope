@@ -53,7 +53,7 @@ class DopePluginEventHandlerImpl implements DopePluginEventHandler {
     }
 
     public function _doOnInstall() {
-        if ($this->isFirstActivation) {
+        if ($this->isFirstActivation && $this->plugin instanceof DopeUninstallable) {
             $this->plugin->onInstall($this->event);
         }
     }
