@@ -10,6 +10,8 @@
  * @author Darius Glockenmeier <darius@glockenmeier.com>
  * @package core
  * @subpackage events
+ * @internal implementation detail
+ * @ignore
  */
 class DopePluginEventHandlerImpl implements DopePluginEventHandler {
 

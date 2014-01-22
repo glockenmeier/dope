@@ -12,6 +12,7 @@
  * @subpackage model
  * @internal DOPE's MVC Model
  * @access private
+ * @ignore
  */
 class DopePluginsModel {
 

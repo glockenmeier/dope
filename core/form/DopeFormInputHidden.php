@@ -8,7 +8,7 @@
  * HTML Form Hidden Input
  * @author Darius Glockenmeier
  * 
- * @package dope
+ * @package core
  * @subpackage form
  * 
  */

@@ -12,6 +12,7 @@
  * @subpackage controller
  * @internal Controller for plugin activation/deactivation and the DOPE plugin menu subitem.
  * @access private
+ * @ignore
  */
 final class DopePluginsController extends DopeController {
     private $plugin_dir;

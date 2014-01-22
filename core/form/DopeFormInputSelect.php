@@ -8,7 +8,7 @@
  * HTML Form Selectbox
  * 
  * @author Darius Glockenmeier
- * @package dope
+ * @package core
  * @subpackage form
  * 
  */

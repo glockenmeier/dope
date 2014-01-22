@@ -7,7 +7,7 @@
 /**
  * HTML Form Checkbox
  * @author Darius Glockenmeier
- * @package dope
+ * @package core
  * @subpackage form
  * 
  */

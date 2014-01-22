@@ -6,7 +6,7 @@
  * HTML form Number input
  *
  * @author Darius Glockenmeier <darius@glockenmeier.com>
- * @package dope
+ * @package core
  * @subpackage form
  * 
  */

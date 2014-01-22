@@ -12,6 +12,7 @@
  * @license license.txt
  * @package dg-oo-plugin-internal
  * @access private
+ * @ignore
  */
 final class DGOOPlugin extends DopePlugin {
 

@@ -16,8 +16,8 @@ class DopeTransient {
     private $prefix;
     
     /**
-     * 
-     * @param string $prefix
+     * Creates an instance of DopeTransient
+     * @param string $prefix prefix put infront of transient
      */
     public function __construct($prefix = '') {
         $this->prefix = strval($prefix);
@@ -82,5 +82,13 @@ class DopeTransient {
      */
     public function delete($transient){
         return delete_transient($this->prefix . $transient);
+    }
+    
+    /**
+     * Sets the transient prefix
+     * @param string $prefix The prefix.
+     */
+    public function setPrefix($prefix){
+        $this->prefix = $prefix;
     }
 }

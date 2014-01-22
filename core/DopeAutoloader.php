@@ -2,12 +2,13 @@
 
 /*
  * Copyright 2013, Darius Glockenmeier.
- * 
+ */
+
+/**
  * Describes an autoloader.
  *
  * @author Darius Glockenmeier <darius@glockenmeier.com>
  * @package core
- * 
  */
 interface DopeAutoloader {
 

@@ -6,6 +6,7 @@ dope_autoloader::register();
  * @package dg-oo-plugin-internal
  * @internal DOPE's Autoloader
  * @access private
+ * @ignore
  */
 final class dope_autoloader {
 

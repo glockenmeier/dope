@@ -8,7 +8,7 @@
  * Abstract class for HTML Form Controls
  * 
  * @author Darius Glockenmeier
- * @package dope
+ * @package core
  * @subpackage form
  * 
  */
