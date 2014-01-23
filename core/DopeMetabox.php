@@ -54,6 +54,9 @@ abstract class DopeMetabox implements DopeCallable {
         return array($this, '_doRenderMetabox');
     }
 
+    /**
+     * Adds the meta box to an edit form.
+     */
     public function add() {
         add_meta_box($this->id, $this->title, $this->getCallback(), $this->screen, $this->context, $this->priority);
     }

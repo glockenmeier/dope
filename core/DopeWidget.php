@@ -30,8 +30,9 @@ abstract class DopeWidget extends WP_Widget {
         parent::__construct($id_base, $name, $widget_options, $control_options);
     }
 
-    /** Echo the widget content.
-     *
+    /**
+     * Echo the widget content.
+     * 
      * Subclasses should over-ride this function to generate their widget code.
      *
      * @param array $args Display arguments including before_title, after_title, before_widget, and after_widget.
@@ -39,8 +40,9 @@ abstract class DopeWidget extends WP_Widget {
      */
     public abstract function widget($args, $instance);
 
-    /** Update a particular instance.
-     *
+    /**
+     * Update a particular instance.
+     * 
      * This function should check that $new_instance is set correctly.
      * The newly calculated value of $instance should be returned.
      * If "false" is returned, the instance won't be saved/updated.
@@ -51,7 +53,8 @@ abstract class DopeWidget extends WP_Widget {
      */
     public abstract function update($new_instance, $old_instance);
 
-    /** Echo the settings update form
+    /**
+     * Echo the settings update form
      *
      * @param array $instance Current settings
      */
