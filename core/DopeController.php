@@ -50,7 +50,7 @@ abstract class DopeController {
             $slug = str_ireplace($this->plugin->getName(), '', $slug);
         }
 
-        return sprintf("%s/%s", $this->plugin->getName(), $slug);
+        return sprintf("%s/%s", sanitize_title($this->plugin->getName()), sanitize_title($slug));
     }
 
     /**
