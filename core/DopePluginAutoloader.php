@@ -58,7 +58,7 @@ final class DopePluginAutoloader implements DopeAutoloader {
      * @param string $dir 
      */
     public function addDir($dir) {
-        if ($dir instanceof string === false) {
+        if ( ! is_string($dir) ) {
             throw new DopeException("Invalid parameter. Expected a string containing directory path");
         }
         if (!in_array($dir, $this->dirs)) {
