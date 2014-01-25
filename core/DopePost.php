@@ -215,6 +215,10 @@ final class DopePost {
         return $this->post_category;
     }
 
+    /**
+     * 
+     * @return string
+     */
     public function getContentFiltered() {
         return $this->post_content_filtered;
     }
@@ -307,4 +311,11 @@ final class DopePost {
         return $this->to_ping;
     }
 
+    /**
+     * The metadata for this post
+     * @return DopePostMeta
+     */
+    public function getMeta() {
+        return new DopePostMeta($this->id, '');
+    }
 }
