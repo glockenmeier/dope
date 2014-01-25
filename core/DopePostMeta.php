@@ -10,7 +10,7 @@
  * @author Darius Glockenmeier <darius@glockenmeier.com>
  * @package core
  */
-abstract class DopePostMeta {
+class DopePostMeta {
 
     protected $post_id;
     protected $meta_prefix;
@@ -26,7 +26,7 @@ abstract class DopePostMeta {
      * @return string the prefixed Metadata key
      */
     protected function createKey($key) {
-        return sprintf('%s_%s', $this->meta_prefix, $key);
+        return sprintf('%s%s', $this->meta_prefix, $key);
     }
 
     protected function processKey($key) {
