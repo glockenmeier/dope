@@ -44,6 +44,15 @@ class DopeUtil {
             printf($out, $title, print_r($var, true));
         }
     }
+    
+    /**
+     * Returns if checkbox is checked
+     * @param string $value value of the checkbox
+     * @return boolean checked value
+     */
+    public static function checkbox_value($value) {
+        return $value !== "";
+    }
 
     /**
      * Retrieve WP_Rewrite object from global $wp_rewrite.
