@@ -1,6 +1,8 @@
 DG's Object-oriented Plugin Extension for WordPress (DOPE)
 ==========================================================
 
+[![Join the chat at https://gitter.im/glockenmeier/dope](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/glockenmeier/dope?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Features:
 
 * Provides object-oriented abstractions for Plugin, CustomPostType, Metabox, Shortcode and the like.
